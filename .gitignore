@@ -1,6 +1,6 @@
 src/node_modules/
 src/npm-debug.log
 
-docker-compose.overload.yml
+docker-compose.override.yml
 .env.node
 .env.mongodb

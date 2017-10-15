@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js"
+    "production": "node index.js",
+    "development": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -21,5 +22,8 @@
     "jade": "^1.11.0",
     "mongoose": "^4.12.1",
     "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "nodemon": "1.12.1"
   }
 }

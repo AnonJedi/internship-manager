@@ -1,0 +1,21 @@
+[
+  {
+    "index": 1,
+    "task": {
+      "title": "Task 1",
+      "description": "Description for Task 1",
+      "picture": "http://lorempixel.com/640/480",
+      "resources": [
+        {
+          "title": "Quos cum reiciendis ducimus qui dignissimos.",
+          "link": "https://oswaldo.com"
+        }
+      ],
+      "exercises": [
+        {
+          "description": "Dolores iusto beatae explicabo et ipsam ab.\nTempore dolorum fugit debitis enim ipsum a voluptate ab.\nAut deserunt rerum et ea totam sed aut quia qui."
+        }
+      ]
+    }
+  }
+]
