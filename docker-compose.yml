@@ -19,4 +19,4 @@ services:
       - ".env.node"
     command: /bin/bash -c "npm i && npm start"
     ports:
-      - "3000"
+      - "3000:3000"
