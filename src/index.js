@@ -7,6 +7,7 @@ const morgan = require('morgan');
 app.set('view engine', 'jade');
 app.use(morgan('dev'));
 
+app.use('/static', express.static(path.resolve(__dirname, 'static')));
 app.use('/', indexRoutes);
 
 const port = 3000;
