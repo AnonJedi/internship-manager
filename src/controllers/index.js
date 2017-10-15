@@ -1,11 +1,12 @@
-const lessonsMock = require('../mocks/lessons.json');
+const lessonsService = require('../services/lessons');
 
 const index = (req, res) => {
+  const allLessons = lessonsService.getAllLessons();
   res.render('index', {
-    lessons: lessonsMock
+    lessons: allLessons,
   });
 };
 
 module.exports = {
-  index
+  index,
 };

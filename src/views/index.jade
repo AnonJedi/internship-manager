@@ -1,4 +1,22 @@
 extends ./layout.jade
 
-block content
-  h1 Test layout
+block sidebar
+  .container-fluid
+    .sidebar
+      nav.nav.flex-column
+        each val, i in lessons
+          if val.isLocked
+            span.nav-link.disabled
+              b
+                | Урок #{i + 1}
+              br 
+              | #{val.task.title}
+          else
+            a.nav-link(href="/lessons/#{val.id}")
+              b
+                | Урок #{i + 1}
+              br 
+              | #{val.task.title}
+  
+    .content-place
+      block content

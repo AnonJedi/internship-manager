@@ -1,9 +1,30 @@
 [
   {
-    "index": 1,
+    "id": 1,
+    "isLocked": false,
     "task": {
       "title": "Task 1",
       "description": "Description for Task 1",
+      "picture": "http://lorempixel.com/640/480",
+      "resources": [
+        {
+          "title": "Quos cum reiciendis ducimus qui dignissimos.",
+          "link": "https://oswaldo.com"
+        }
+      ],
+      "exercises": [
+        {
+          "description": "Dolores iusto beatae explicabo et ipsam ab.\nTempore dolorum fugit debitis enim ipsum a voluptate ab.\nAut deserunt rerum et ea totam sed aut quia qui."
+        }
+      ]
+    }
+  },
+  {
+    "id": 2,
+    "isLocked": true,
+    "task": {
+      "title": "Task 2",
+      "description": "Description for Task 2",
       "picture": "http://lorempixel.com/640/480",
       "resources": [
         {

@@ -1,0 +1,30 @@
+extends ./index.jade
+
+block content
+  unless lesson
+    span.alert.alert-info.d-inline-block(role="alert")
+      | Урок не найден
+  else if lesson.isLocked
+    span.alert.alert-info.d-inline-block(role="alert")
+      | Урок ещё недоступе
+  else
+    h2
+      | !{lesson.task.title}
+    p.clearfix
+      a(href="#{lesson.task.picture}" target="_blank")
+        img.float-left.rounded.lesson-picture(src="#{lesson.task.picture}", alt="Картинка для урока")
+      | !{lesson.task.description}
+    
+    h3
+      | Ресурсы:
+    ul.list-unstyled
+      each val in lesson.task.resources
+        a(href="#{val.link}", target="_blank")
+          | !{val.title}
+    
+    h3
+      | Задачи:
+    ul.list-unstyled
+      each val in lesson.task.exercises
+        li
+          | !{val.description}

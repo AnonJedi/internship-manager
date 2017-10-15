@@ -1,0 +1,19 @@
+.sidebar {
+  display: inline-block;
+  width: 200px;
+  height: 100%;
+  overflow: auto;
+}
+
+.content-place {
+  display: inline-block;
+  width: calc(100% - 200px);
+  vertical-align: top;
+  padding: 15px;
+}
+
+.lesson-picture {
+  width: 300px;
+  height: auto;
+  margin-right: 15px;
+}
