@@ -33,10 +33,16 @@ passport.use(new LocalStrategy(
     // authenticated `user`.
     authService.findByEmail(username, (err, user) => {
       if (err) { return done(err); }
-      if (!user || user.password != password) { 
+      if (!user) { 
         return done(null, false, { message: 'username or password is incorrect' }); 
       }
-      return done(null, user);
+      user.checkPass(password)
+        .then((isMatch) => {
+          if (isMatch) {
+            return done(null, user);
+          }
+        })
+      return done(null, false, { message: 'username or password is incorrect' }); 
     })
   }
 ));
