@@ -9,11 +9,6 @@ const methodOverride = require('method-override');
 const session = require('express-session');
 const flash = require('connect-flash');
 
-const indexRoutes = require('./routing/index');
-const lessonsRoutes = require('./routing/lessons');
-const authRoutes = require('./routing/auth');
-const errorsControllers = require('./controllers/errors');
-
 app.set('view engine', 'jade');
 app.use(morgan('dev'));
 
@@ -25,6 +20,36 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.authenticate('remember-me'));
+
+const mongoose = require('mongoose');
+const dbURL = `mongodb://mongodb:27017/`;
+console.log(dbURL);
+mongoose.connect(dbURL);
+const db = mongoose.connection;
+db.on('error', console.error.bind(console, 'connection error:'));
+db.once('open', function() {
+  console.log('DB connection complete');
+  // we're connected!
+});
+
+// mongoose.Promise = global.Promise;
+// const tryToConnectDB = () => {
+// 	mongoose.connect(dbURL, function(error) {
+// 		if (!error) {
+// 			console.log('DB connection complete');
+// 			clearInterval(intervalId);
+// 			return;
+// 		}	
+// 		console.log('Waiting for db connect...');
+// 	});	
+// };
+
+// const intervalId = setInterval(tryToConnectDB, 1000);
+
+const indexRoutes = require('./routing/index');
+const lessonsRoutes = require('./routing/lessons');
+const authRoutes = require('./routing/auth');
+const errorsControllers = require('./controllers/errors');
 
 app.use('/static', express.static(path.resolve(__dirname, 'static')));
 app.use('/', indexRoutes);
