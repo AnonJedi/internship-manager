@@ -1,6 +1,6 @@
 const v4 = require('uuid/v4');
-// const users = require('../mocks/users');
-
+const User = require('../models/user');
+const Token = require('../models/token');
 
 const users = [
   { id: 1, username: 'bob', password: 'secret', email: 'bob@example.com' },
@@ -8,37 +8,40 @@ const users = [
 ];
 
 const findById = (id, fn) => {
-  var idx = id - 1;
-  if (users[idx]) {
-    fn(null, users[idx]);
-  } else {
-    fn(new Error('User ' + id + ' does not exist'));
-  }
+  User.findById(id)
+    .exec()
+    .then((user) => {
+      if (user) {
+        fn(null, users[idx]);
+      } else {
+        fn(new Error('User ' + id + ' does not exist'));
+      }
+    });
 }
 
-const findByUsername = (username, fn) => {
-  for (var i = 0, len = users.length; i < len; i++) {
-    var user = users[i];
-    if (user.username === username) {
-      return fn(null, user);
-    }
-  }
-  return fn(null, null);
+const findByEmail = (username, fn) => {
+  User.findOne({ email: username }).exec()
+    .then((user) => {
+      if (user) { return fn(null, user); } 
+      return fn(null, null);
+    });
 }
-
-/* Fake, in-memory database of remember me tokens */
-
-const tokens = {};
 
 const consumeRememberMeToken = (token, fn) => {
-  var uid = tokens[token];
-  // invalidate the single-use token
-  delete tokens[token];
-  return fn(null, uid);
+  Token.findOne({ token }).exec()
+    .then((t) => {
+      if (t) {
+        fn(null, t.userId);
+        t.remove().exec();
+      } else {
+        fn();
+      }
+    })
 }
 
-const saveRememberMeToken = (token, uid, fn) => {
-  tokens[token] = uid;
+const saveRememberMeToken = (token, userId, fn) => {
+  const newToken = new Token({ token, userId });
+  newToken.save();
   return fn();
 }
 
@@ -52,7 +55,7 @@ const issueToken = (user, done) => {
 
 module.exports = {
   findById,
-  findByUsername,
+  findByEmail,
   consumeRememberMeToken,
   issueToken,
 };

@@ -31,7 +31,7 @@ passport.use(new LocalStrategy(
     // username, or the password is not correct, set the user to `false` to
     // indicate failure and set a flash message.  Otherwise, return the
     // authenticated `user`.
-    authService.findByUsername(username, (err, user) => {
+    authService.findByEmail(username, (err, user) => {
       if (err) { return done(err); }
       if (!user || user.password != password) { 
         return done(null, false, { message: 'username or password is incorrect' }); 

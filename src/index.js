@@ -15,16 +15,21 @@ app.use(morgan('dev'));
 app.use(cookieParser());
 app.use(bodyParser());
 app.use(methodOverride());
-app.use(session({ secret: process.env.SECRET_KEY || 'keyboard cat' }));
+app.use(session({ 
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: true },
+  secret: process.env.SECRET_KEY || 'keyboard cat' 
+}));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.authenticate('remember-me'));
 
 const mongoose = require('mongoose');
+mongoose.Promise = require('bluebird');
 const dbURL = `mongodb://mongodb:27017/`;
-console.log(dbURL);
-mongoose.connect(dbURL);
+mongoose.connect(dbURL, { useMongoClient: true });
 const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
@@ -35,11 +40,13 @@ const indexRoutes = require('./routing/index');
 const lessonsRoutes = require('./routing/lessons');
 const authRoutes = require('./routing/auth');
 const errorsControllers = require('./controllers/errors');
+const adminRoutes = require('./routing/admin');
 
 app.use('/static', express.static(path.resolve(__dirname, 'static')));
 app.use('/', indexRoutes);
 app.use('/', authRoutes);
 app.use('/lessons', lessonsRoutes);
+app.use('/admin', adminRoutes);
 app.use('*', errorsControllers.notFound);
 
 const port = process.env.PORT || 3000;
