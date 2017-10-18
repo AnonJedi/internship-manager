@@ -29,22 +29,7 @@ const db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error:'));
 db.once('open', function() {
   console.log('DB connection complete');
-  // we're connected!
 });
-
-// mongoose.Promise = global.Promise;
-// const tryToConnectDB = () => {
-// 	mongoose.connect(dbURL, function(error) {
-// 		if (!error) {
-// 			console.log('DB connection complete');
-// 			clearInterval(intervalId);
-// 			return;
-// 		}	
-// 		console.log('Waiting for db connect...');
-// 	});	
-// };
-
-// const intervalId = setInterval(tryToConnectDB, 1000);
 
 const indexRoutes = require('./routing/index');
 const lessonsRoutes = require('./routing/lessons');
