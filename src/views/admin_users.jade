@@ -1,0 +1,61 @@
+extends ./layout.jade
+
+block container
+  h2
+    | Пользователи
+  div
+    form(action="/admin/users", method="POST", type="form")
+      input(type="hidden", name="_csrf", value="#{csrf}")
+
+      h4
+        | Новый пользователь
+      label(for="username-new")
+        | имя пользователя
+      input(id="username-new", type="text", name="username", required)
+      
+      label(for="email-new")
+        | email
+      input(id="email-new", type="text", name="email", required)
+      
+      label(for="password-new")
+        | пароль
+      input(id="password-new", type="text", name="password", required)
+      
+      label(for="role-new")
+        | роль
+      select(id="role-new", name="role", required)
+        option(value="0")
+          | админ
+        option(value="1")
+          | пользователь
+      
+      input(type="submit", value="Создать пользователя")
+      
+    if successImport
+      div
+        | Успех!
+
+  each user in users
+    div
+      form(action="/admin/users/#{user.id}", method="PUT", type="form")
+        input(type="hidden", name="_csrf", value="#{csrf}")
+
+        label(for="username-#{user.id}")
+          | имя пользователя
+        input(id="username-#{user.id}", type="text", value="#{user.username}", name="username", required)
+        
+        label(for="email-#{user.id}")
+          | email
+        input(id="email-#{user.id}", type="text", value="#{user.email}", name="email", required)
+        
+        label(for="password-#{user.id}")
+          | пароль
+        input(id="password-#{user.id}", type="text", name="password")
+        
+        label(for="role-#{user.id}")
+          | роль
+        select(id="role-#{user.id}", name="role", required)
+          option(value="0", selected=user.role == 0)
+            | админ
+          option(value="1", selected=user.role == 1)
+            | пользователь

@@ -8,6 +8,7 @@ const bodyParser = require('body-parser');
 const methodOverride = require('method-override');
 const session = require('express-session');
 const flash = require('connect-flash');
+const csrf = require('csurf');
 
 app.set('view engine', 'jade');
 app.use(morgan('dev'));
@@ -25,6 +26,7 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.authenticate('remember-me'));
+app.use(csrf());
 
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');

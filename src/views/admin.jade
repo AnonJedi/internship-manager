@@ -1,18 +1,10 @@
 extends ./layout.jade
 
 block container
-  form(method="POST", action="/admin/import-lessons", type="form")
-    textarea(type="textarea", name="lessons", placeholder="Paste JSON with lessons")
-    input(type="submit", value="submit")
+  div
+    a(href="/admin/users")
+      | Пользователи
+  div
+    a(href="/admin/lessons")
+      | Уроки
   
-  if successImport
-    div
-      | Успех!
-
-  form(method="POST", action="/admin/create-user", type="form")
-    textarea(type="textarea", name="user", placeholder="Paste JSON with user data")
-    input(type="submit", value="submit")
-
-  if successUserCreation
-    div
-      | Успех!
