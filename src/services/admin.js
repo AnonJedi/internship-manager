@@ -1,4 +1,3 @@
-const bcrypt = require('bcrypt');
 const Lesson = require('../models/lesson');
 const User = require('../models/user');
 

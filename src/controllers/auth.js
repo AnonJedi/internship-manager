@@ -1,12 +1,12 @@
 const authService = require('../services/auth');
 
 const getLogin = (req, res) => {
-  res.render('login');
+  res.render('login', { csrf: req.csrfToken() });
 };
 
 const postLogin = (req, res, next) => {
   // Issue a remember me cookie if the option was checked
-  if (!req.body.remember_me) { return next(); }
+  // if (!req.body.remember_me) { return next(); }
   
   authService.issueToken(req.user, (err, token) => {
     if (err) { return next(err); }

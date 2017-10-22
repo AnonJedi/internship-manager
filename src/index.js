@@ -15,7 +15,7 @@ app.use(morgan('dev'));
 
 app.use(cookieParser());
 app.use(bodyParser());
-app.use(methodOverride());
+// app.use(methodOverride());
 app.use(session({ 
   resave: false,
   saveUninitialized: true,
@@ -26,7 +26,6 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(passport.authenticate('remember-me'));
-app.use(csrf());
 
 const mongoose = require('mongoose');
 mongoose.Promise = require('bluebird');
@@ -43,6 +42,15 @@ const lessonsRoutes = require('./routing/lessons');
 const authRoutes = require('./routing/auth');
 const errorsControllers = require('./controllers/errors');
 const adminRoutes = require('./routing/admin');
+
+app.use(csrf({ cookie: true }));
+
+app.use(function (req, res, next) {
+  var token = req.csrfToken();
+  res.cookie('XSRF-TOKEN', token);
+  res.locals.csrfToken = token;
+  next();
+});
 
 app.use('/static', express.static(path.resolve(__dirname, 'static')));
 app.use('/', indexRoutes);

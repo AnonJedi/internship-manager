@@ -3,6 +3,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const RememberMeStrategy = require('passport-remember-me').Strategy;
 
 const authService = require('../services/auth');
+const userService = require('../services/user');
 const { USER_ROLE_ADMIN } = require('../constants/user');
 
 const authRequired = (req, res, next) => {
@@ -16,13 +17,15 @@ const adminAuthRequired = (req, res, next) => {
 }
 
 passport.serializeUser((user, done) => {
-  done(null, user.id);
+  done(null, user._id);
 });
 
 passport.deserializeUser((id, done) => {
-  authService.findById(id, (err, user) => {
-    done(err, user);
-  });
+  userService.getById(id)
+    .then((user) => {
+      done(null, user);
+    })
+    .catch((err) => { done(err); });
 });
 
 passport.use(new LocalStrategy(
@@ -31,19 +34,25 @@ passport.use(new LocalStrategy(
     // username, or the password is not correct, set the user to `false` to
     // indicate failure and set a flash message.  Otherwise, return the
     // authenticated `user`.
-    authService.findByEmail(username, (err, user) => {
-      if (err) { return done(err); }
-      if (!user) { 
-        return done(null, false, { message: 'username or password is incorrect' }); 
-      }
-      user.checkPass(password)
-        .then((isMatch) => {
-          if (isMatch) {
-            return done(null, user);
-          }
-        })
-      return done(null, false, { message: 'username or password is incorrect' }); 
-    })
+    let savedUser;
+    userService.getByEmail(username)
+      .then((user) => {
+        if (!user) { 
+          return done(null, false, { message: 'username or password is incorrect' }); 
+        }
+        savedUser = user
+        return savedUser.checkPass(password);
+      })
+      .then((isMatch) => {
+        if (isMatch) {
+          return done(null, savedUser);
+        } else {
+          throw new Error;
+        }
+      })
+      .catch((err) => {
+        done(null, false, { message: 'username or password is incorrect' });
+      });
   }
 ));
 
@@ -57,11 +66,14 @@ passport.use(new RememberMeStrategy(
       if (err) { return done(err); }
       if (!uid) { return done(null, false); }
       
-      authService.findById(uid, (err, user) => {
-        if (err) { return done(err); }
-        if (!user) { return done(null, false); }
-        return done(null, user);
-      });
+      userService.getById(uid)
+        .then((user) => {
+          if (!user) return done(null, false);
+          return done(null, user);
+        })
+        .catch((err) => {
+          done(err)
+        });
     });
   },
   authService.issueToken

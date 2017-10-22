@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const tokenSchema = mongoose.Schema({
   id: mongoose.Schema.Types.ObjectId,
-  userId: Number,
+  userId: mongoose.Schema.Types.ObjectId,
   token: String,
 });
 

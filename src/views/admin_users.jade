@@ -31,14 +31,15 @@ block container
       
       input(type="submit", value="Создать пользователя")
       
-    if successImport
+    if flash
       div
-        | Успех!
+        | #{flash[0].message}
 
   each user in users
     div
-      form(action="/admin/users/#{user.id}", method="PUT", type="form")
+      form(action="/admin/users/#{user.id}", method="POST", type="form")
         input(type="hidden", name="_csrf", value="#{csrf}")
+        input(type="hidden", name="action", value="PUT")
 
         label(for="username-#{user.id}")
           | имя пользователя
@@ -46,7 +47,7 @@ block container
         
         label(for="email-#{user.id}")
           | email
-        input(id="email-#{user.id}", type="text", value="#{user.email}", name="email", required)
+        input(id="email-#{user.id}", type="email", value="#{user.email}", name="email", required)
         
         label(for="password-#{user.id}")
           | пароль
@@ -59,3 +60,12 @@ block container
             | админ
           option(value="1", selected=user.role == 1)
             | пользователь
+
+        input(type="submit", value="Сохранить")
+
+      form(action="/admin/users/#{user.id}", method="POST", type="form")
+        input(type="hidden", name="_csrf", value="#{csrf}")
+        input(type="hidden", name="action", value="DELETE")
+        input(type="submit", value="Удалить")
+
+      

@@ -9,9 +9,9 @@ const userSchema = mongoose.Schema({
   email: String,
 });
 
-userSchema.checkPass = (pass) => {
-  return bcrypt.compare(myPlaintextPassword, hash);
-}
+userSchema.methods.checkPass = function (pass) {
+  return bcrypt.compare(pass, this.password);
+};
 
 const User = mongoose.model('User', userSchema);
 
