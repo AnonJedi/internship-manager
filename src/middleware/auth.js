@@ -12,6 +12,7 @@ const authRequired = (req, res, next) => {
 }
 
 const adminAuthRequired = (req, res, next) => {
+  console.log(req.user);
   if (req.isAuthenticated() && req.user.role === USER_ROLE_ADMIN) { return next(); }
   res.render('404');
 }

@@ -1,0 +1,43 @@
+extends ./layout.jade
+
+block container
+  form(method='POST', type="form")
+    input(type="hidden", name="_csrf", value="#{csrf}")
+
+    h4
+      | Новый урок
+    label(for="title-new")
+      | Заголовок
+    input(id="title-new", type="text", name="title", placeholder="title", required)
+    
+    label(for="description-new")
+      | Описание
+    input(id="description-new", type="text", name="description", placeholder="description", required)
+
+    label(for="picture-new")
+      | Картинка
+    input(id="picture-new", type="text", name="picture", placeholder="picture")
+
+    label(for="locked-new")
+      | Урок закрыт
+    input(id="locked-new", type="checkbox", name="islocked", checked)
+
+    label(for="resources-new")
+      | Ресурсы
+    textarea(id="resources-new", name="resources", placeholder="формат типа: [title](link),[title](link),...")
+
+    input(type="submit", value="Создать")
+
+  ul
+    each lesson, i in lessons
+      li
+        a(href="/admin/lessons/#{lesson.id}")
+          | #{lesson.task.title}
+        if i > 0
+          form(method="POST", action="/admin/lessons/#{lesson.id}/order-up")
+            input(type="hidden", name="_csrf", value="#{csrf}")
+            input(type="submit", value="Повысить порядок")
+        if i < lessons.length - 1
+          form(method="POST", action="/admin/lessons/#{lesson.id}/order-down")
+            input(type="hidden", name="_csrf", value="#{csrf}")
+            input(type="submit", value="Понизить порядок")

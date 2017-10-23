@@ -1,14 +1,10 @@
 const adminServices = require('../services/admin');
 const userServices = require('../services/user');
 const userMapper = require('../mappers/user');
+const lessonService = require('../services/lessons');
 
 const getAdmin = (req, res) => {
   res.render('admin');
-}
-
-const importLessons = (req, res) => {
-  adminServices.importLessons(req.body.lessons);
-  res.render('admin', { successImport: true });
 };
 
 const getUsersPage = (req, res) => {
@@ -62,11 +58,46 @@ const deleteUser = (req, res) => {
     });
 };
 
+const getLessonsPage = (req, res) => {
+  lessonService.getAllLessons()
+    .then((lessons) => {
+      res.render('admin_lessons_list', { lessons, csrf: req.csrfToken() })
+    })
+};
+
+const createLesson = (req, res) => {
+  lessonService.createLesson(req.body)
+    .then((result) => {
+      res.redirect('/admin/lessons');
+    });
+};
+
+const lessonOrderUp = (req, res) => {
+  lessonService.orderUp(req.params.id)
+    .then((result) => {
+      res.redirect('admin/lessons');
+    });
+};
+
+const lessonOrderDown = (req, res) => {
+  lessonService.orderDown(req.params.id)
+    .then((result) => {
+      console.log(result)
+      res.redirect('admin/lessons');
+    })
+    .catch((err) => {
+      console.log(err)
+    });
+};
+
 module.exports = {
-  importLessons,
   getAdmin,
   getUsersPage,
   createUser,
   updateUser,
   deleteUser,
+  getLessonsPage,
+  createLesson,
+  lessonOrderUp,
+  lessonOrderDown,
 };

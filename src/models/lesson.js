@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 
 const lessonSchema = mongoose.Schema({
-  id: mongoose.Schema.Types.ObjectId,
   isLocked: Boolean,
+  order: Number,
   task: {
     title: String,
     description: String,
