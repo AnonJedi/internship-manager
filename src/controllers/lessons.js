@@ -1,13 +1,15 @@
 const lessonsService = require('../services/lessons');
 
 const getLesson = (req, res) => {
-  const lessonId = parseInt(req.params.id);
-  const lesson = lessonsService.getLessonById(lessonId);
-  res.render('lesson', {
-    lessons: lessonsService.getAllLessons(),
-    lesson,
-  });
-}
+  Promise.all([
+    lessonsService.getAllLessons(),
+    lessonsService.getLessonById(req.params.id),
+  ])
+    .then(([lessons, lesson]) => {
+      console.log(lessons, lesson);
+      res.render('lesson', { lessons, lesson });
+    });
+};
 
 module.exports = {
   getLesson,

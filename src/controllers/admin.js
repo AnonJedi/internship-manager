@@ -75,18 +75,40 @@ const createLesson = (req, res) => {
 const lessonOrderUp = (req, res) => {
   lessonService.orderUp(req.params.id)
     .then((result) => {
-      res.redirect('admin/lessons');
+      res.redirect('/admin/lessons');
     });
 };
 
 const lessonOrderDown = (req, res) => {
   lessonService.orderDown(req.params.id)
     .then((result) => {
-      console.log(result)
-      res.redirect('admin/lessons');
+      res.redirect('/admin/lessons');
     })
     .catch((err) => {
       console.log(err)
+    });
+};
+
+const getLessonPage = (req, res) => {
+  lessonService.getLessonById(req.params.id)
+    .then((lesson) => {
+      const resources = lesson.task.resources.map((r => (`[${r.title}](${r.link})`))).join(',');
+      res.render('admin_lesson_edit', { lesson, resources, csrf: req.csrfToken() });
+    });
+};
+
+const updateLesson = (req, res) => {
+  const { _csrf, action, ...data } = req.body;
+  lessonService.updateLesson(req.params.id, data)
+    .then(() => {
+      res.redirect(`/admin/lessons/${req.params.id}`);
+    });
+};
+
+const removeLesson = (req, res) => {
+  lessonService.removeLesson(req.params.id)
+    .then(() => {
+      res.redirect('/admin/lessons');
     });
 };
 
@@ -100,4 +122,7 @@ module.exports = {
   createLesson,
   lessonOrderUp,
   lessonOrderDown,
+  getLessonPage,
+  updateLesson,
+  removeLesson,
 };

@@ -1,0 +1,34 @@
+extends ./layout.jade
+
+block container
+  if lesson
+    form(method='POST', type="form")
+      input(type="hidden", name="_csrf", value="#{csrf}")
+      input(type="hidden", name="action", value="PUT")
+
+      h4
+        | #{lesson.task.title}
+      label(for="title")
+        | Заголовок
+      input(id="title", type="text", name="title", value="#{lesson.task.title}", placeholder="title", required)
+      
+      label(for="description")
+        | Описание
+      input(id="description", type="text", name="description", value="#{lesson.task.description}", placeholder="description", required)
+
+      label(for="picture")
+        | Картинка
+      input(id="picture", type="text", name="picture", value="#{lesson.task.picture}", placeholder="picture")
+
+      label(for="locked")
+        | Урок закрыт
+      input(id="locked", type="checkbox", name="islocked", checked=(lesson.isLocked ? "checked" : null))
+
+      label(for="resources")
+        | Ресурсы
+      textarea(id="resources", name="resources", placeholder="формат типа: [title](link),[title](link),...")
+        | #{resources}
+      input(type="submit", value="Сохранить")
+  else
+    h1
+      | Урок не найден

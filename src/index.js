@@ -10,6 +10,7 @@ const session = require('express-session');
 const flash = require('connect-flash');
 const csrf = require('csurf');
 
+global.Promise=require("bluebird");
 app.set('view engine', 'jade');
 app.use(morgan('dev'));
 

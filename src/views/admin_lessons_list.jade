@@ -41,3 +41,7 @@ block container
           form(method="POST", action="/admin/lessons/#{lesson.id}/order-down")
             input(type="hidden", name="_csrf", value="#{csrf}")
             input(type="submit", value="Понизить порядок")
+        form(method="POST", action="/admin/lessons/#{lesson.id}")
+          input(type="hidden", name="_csrf", value="#{csrf}")
+          input(type="hidden", name="action", value="DELETE")
+          input(type="submit", value="Удалить")

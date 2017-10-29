@@ -4,35 +4,40 @@ const Lesson = require('../models/lesson');
 const getAllLessons = () => Lesson.find().sort('order').exec();
 
 const getLessonById = (lessonId) => {
-  return lessonsMock.filter(lesson => lesson.id === lessonId)[0];
+  return Lesson.findOne({ _id: lessonId }).exec();
 };
 
+const parseLessonData = (params) => {
+  const data = {}
+  data.isLocked = !!params.islocked;
+  data.task = {
+    title: params.title,
+    description: params.description,
+    picture: params.picture,
+  }
+  if (params.resources) {
+    const mdResources = params.resources.split(',');
+    data.task.resources = mdResources.map((r) => {
+      const splitedResource = r.trim().split('](');
+      return {
+        title: splitedResource[0].substring(1),
+        link: splitedResource[1].substring(0, splitedResource[1].length - 1),
+      };
+    });
+  }
+
+  data.task.exercises = [];
+  console.log(data);
+  return data;
+}
+
 const createLesson = (lessonData) => {
-  let lessonOrder;
-  let newLesson = new Lesson();
+  const newLesson = parseLessonData(lessonData);
   return Lesson.count({}).exec()
     .then((count) => {
-      lessonOrder = count + 1;
-      newLesson.order = lessonOrder;
-      newLesson.isLocked = !!lessonData.islocked;
-      newLesson.task = {
-        title: lessonData.title,
-        descrition: lessonData.descrition,
-        picture: lessonData.picture,
-      }
-      if (lessonData.resources) {
-        const mdResources = lessonData.resources.split(',');
-        newLesson.task.resources = mdResources.map((r) => {
-          const splitedResource = r.trim().split('](');
-          return {
-            title: splitedResource[0].substring(1),
-            link: splitedResource[1].substring(0, splitedResource[1].length - 1),
-          };
-        });
-      }
+      newLesson.order = count + 1; 
 
-      newLesson.task.exercises = [];
-      return newLesson.save();
+      return new Lesson(newLesson).save();
     });
 };
 
@@ -45,30 +50,44 @@ const orderUp = (lessonId) => {
       return Lesson.findOne({ order: lesson.order - 1 }).exec();
     })
     .then((lesson) => {
-      lesson.order = lesson.order + 1;
-      currentLesson.order - 1;
-      return Promise.all(lesson.save(), currentLesson.save());
+      lesson.order += 1;
+      currentLesson.order -= 1;
+      return Promise.all([lesson.save(), currentLesson.save()]);
     });
 };
 
 const orderDown = (lessonId) => {
   let currentLesson;
   let lessonCount;
-  return Promise.all(
+  return Promise.all([
     Lesson.findOne({ _id: lessonId }).exec(),
     Lesson.count({}).exec(),
-  )
+  ])
     .then(([lesson, count]) => {
+      console.log(lesson, count);
       if (lesson.order === count) return Promise.resolve(null);
       currentLesson = lesson;
       return Lesson.findOne({ order: lesson.order + 1 }).exec();
     })
     .then((lesson) => {
-      lesson.order = lesson.order - 1;
-      currentLesson.order + 1;
-      return Promise.all(lesson.save(), currentLesson.save());
+      lesson.order -= 1;
+      currentLesson.order += 1;
+      return Promise.all([lesson.save(), currentLesson.save()]);
     });
 };
+
+const updateLesson = (lessonId, data) => {
+  return Lesson.update(
+    { _id: lessonId },
+    {
+      $set: parseLessonData(data),
+    },
+  ).exec();
+};
+
+const removeLesson = (lessonId) => {
+  return Lesson.remove({ _id: lessonId });
+}
 
 module.exports = {
   getAllLessons,
@@ -76,4 +95,6 @@ module.exports = {
   createLesson,
   orderUp,
   orderDown,
+  updateLesson,
+  removeLesson,
 };
