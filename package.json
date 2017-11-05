@@ -1,0 +1,22 @@
+{
+  "name": "internship-manager",
+  "version": "1.0.0",
+  "description": "Starter file for heroku server",
+  "main": "src/index.js",
+  "scripts": {
+    "start": "npm i --prefix src && npm start --prefix src"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnonJedi/internship-manager.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnonJedi/internship-manager/issues"
+  },
+  "homepage": "https://github.com/AnonJedi/internship-manager#readme",
+  "engines": {
+    "node": "8.7.0"
+  }
+}

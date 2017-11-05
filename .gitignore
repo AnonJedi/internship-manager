@@ -1,5 +1,6 @@
 src/node_modules/
 src/npm-debug.log
+npm-debug.log
 
 docker-compose.override.yml
 .env.node
