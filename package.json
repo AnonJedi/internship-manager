@@ -17,6 +17,6 @@
   },
   "homepage": "https://github.com/AnonJedi/internship-manager#readme",
   "engines": {
-    "node": "6.10.2"
+    "node": "8.7.0"
   }
 }

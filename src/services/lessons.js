@@ -81,7 +81,7 @@ const updateLesson = (lessonId, data) => {
     { _id: lessonId },
     {
       $set: parseLessonData(data),
-    },
+    }
   ).exec();
 };
 
