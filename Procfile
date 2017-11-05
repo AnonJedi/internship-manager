@@ -1,2 +1,1 @@
-prepare: bash -c "cd src/ && npm i" 
-web: npm start
+web: npm start --prefix src
