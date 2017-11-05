@@ -8,7 +8,7 @@
 
 2. Overriding templates
   1. Copy files `.env.node.example` to `.env.node` and `.env.mongodb.example` to `.env.mongodb` and change it if need
-  2. Copy docker-compose.development.yml and rename it to docker-compose.override.yml. It's need to use ports for docker containers.  
+  2. Copy `docker-compose.development.yml` and rename it to `docker-compose.override.yml`. It's need to use ports for docker containers.  
 
 ## Startup application
 
