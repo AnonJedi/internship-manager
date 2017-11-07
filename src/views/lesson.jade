@@ -25,6 +25,5 @@ block content
     h3
       | Задачи:
     ul.list-unstyled
-      each val in lesson.task.exercises
-        li
-          | !{val.description}
+      li
+        | !{lesson.task.exercises}

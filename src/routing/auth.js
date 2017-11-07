@@ -1,6 +1,6 @@
 const router = require('express').Router();
-const authPageControllers = require('../controllers/auth');
 const passport = require('passport');
+const authPageControllers = require('../controllers/auth');
 
 router.get('/login', authPageControllers.getLogin);
 router.post(

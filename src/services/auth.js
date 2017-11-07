@@ -16,8 +16,9 @@ const consumeRememberMeToken = (token, fn) => {
 
 const saveRememberMeToken = (token, userId, fn) => {
   const newToken = new Token({ token, userId });
-  newToken.save();
-  return fn();
+  newToken.save().then(() => {
+    fn()
+  });
 }
 
 const issueToken = (user, done) => {

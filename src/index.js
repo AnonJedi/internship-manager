@@ -54,10 +54,10 @@ app.use(function (req, res, next) {
 });
 
 app.use('/static', express.static(path.resolve(__dirname, 'static')));
-app.use('/', indexRoutes);
-app.use('/', authRoutes);
 app.use('/lessons', lessonsRoutes);
 app.use('/admin', adminRoutes);
+app.use('/', authRoutes);
+app.use('/', indexRoutes);
 app.use('*', errorsControllers.notFound);
 
 const port = process.env.PORT || 3000;

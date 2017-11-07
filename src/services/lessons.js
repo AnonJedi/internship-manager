@@ -1,4 +1,3 @@
-const lessonsMock = require('../mocks/lessons.json');
 const Lesson = require('../models/lesson');
 
 const getAllLessons = () => Lesson.find().sort('order').exec();
@@ -26,8 +25,7 @@ const parseLessonData = (params) => {
     });
   }
 
-  data.task.exercises = [];
-  console.log(data);
+  data.task.exercises = params.exercises;
   return data;
 }
 
@@ -64,7 +62,6 @@ const orderDown = (lessonId) => {
     Lesson.count({}).exec(),
   ])
     .then(([lesson, count]) => {
-      console.log(lesson, count);
       if (lesson.order === count) return Promise.resolve(null);
       currentLesson = lesson;
       return Lesson.findOne({ order: lesson.order + 1 }).exec();

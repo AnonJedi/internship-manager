@@ -36,6 +36,13 @@ block container
             | Ресурсы
           textarea(id="resources", class="form-control", name="resources", placeholder="формат типа: [title](link),[title](link),...")
             | #{resources}
+
+        .form-group
+          label(for="exercises")
+            | Ресурсы
+          textarea(id="exercises", class="form-control", name="exercises", placeholder="Markdown формат")
+            | #{lesson.task.exercises}
+
         input(type="submit", class="btn btn-primary", value="Сохранить")
     else
       h1

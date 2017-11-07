@@ -13,11 +13,7 @@ const lessonSchema = mongoose.Schema({
         link: String,
       },
     ],
-    exercises: [
-      {
-        description: String,
-      },
-    ],
+    exercises: String,
   },
 });
 

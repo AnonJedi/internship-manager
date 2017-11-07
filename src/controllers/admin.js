@@ -18,7 +18,6 @@ const getUsersPage = (req, res) => {
 const createUser = (req, res) => {
   userServices.createUser(req.body)
     .then((some) => {
-      console.log(some);
       req.flash('Успех!');
       res.redirect('/admin/users');
     })
