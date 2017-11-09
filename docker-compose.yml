@@ -18,7 +18,6 @@ services:
     links:
       - "mongodb"
     env_file:
-      - ".env.mongodb"
       - ".env.node"
     command: /bin/bash -c "npm i && npm start"
     ports:

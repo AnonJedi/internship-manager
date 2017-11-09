@@ -60,7 +60,7 @@ app.use('/', authRoutes);
 app.use('/', indexRoutes);
 app.use('*', errorsControllers.notFound);
 
-const port = process.env.PORT || 3000;
+const port = 3000;
 app.listen(port, () => {
   console.log(`Manager has been started on localhost:${port}`);
 });

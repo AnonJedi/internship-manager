@@ -7,8 +7,9 @@
   2. For docker-compose installation use [official guide](https://docs.docker.com/compose/install/)  
 
 2. Overriding templates
-  1. Copy files `.env.node.example` to `.env.node` and `.env.mongodb.example` to `.env.mongodb` and change it if need
+  1. Copy files `.env.node.example` to `.env.node` and change it if need
   2. Copy `docker-compose.development.yml` and rename it to `docker-compose.override.yml`. It's need to use ports for docker containers.  
+  3. For application port edit see `docker-compose.yml` file in `node.ports` section
 
 ## Startup application
 
