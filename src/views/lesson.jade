@@ -15,15 +15,17 @@ block content
         img.float-left.rounded.lesson-picture(src="#{lesson.task.picture}", alt="Картинка для урока")
       | !{lesson.task.description}
     
-    h3
-      | Ресурсы:
-    ul.list-unstyled
-      each val in lesson.task.resources
-        li
-          a(href="#{val.link}", target="_blank")
-            | #{val.title}
+    if lesson.task.resources.length > 0
+      h3
+        | Ресурсы:
+      ul.list-unstyled
+        each val in lesson.task.resources
+          li
+            a(href="#{val.link}", target="_blank")
+              | #{val.title}
     
-    h3
-      | Задачи:
-    div
-      | !{lesson.task.exercises}
+    if lesson.task.exercises
+      h3
+        | Задачи:
+      div
+        | !{lesson.task.exercises}
