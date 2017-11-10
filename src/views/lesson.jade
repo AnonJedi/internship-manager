@@ -19,11 +19,11 @@ block content
       | Ресурсы:
     ul.list-unstyled
       each val in lesson.task.resources
-        a(href="#{val.link}", target="_blank")
-          | !{val.title}
+        li
+          a(href="#{val.link}", target="_blank")
+            | #{val.title}
     
     h3
       | Задачи:
-    ul.list-unstyled
-      li
-        | !{lesson.task.exercises}
+    div
+      | !{lesson.task.exercises}
