@@ -13,10 +13,12 @@ const parseLessonData = (params) => {
     title: params.title,
     description: params.description,
     picture: params.picture,
-  }
+    exercises: params.exercises,
+  };
   if (params.resources) {
     const mdResources = params.resources.split(',');
     data.task.resources = mdResources.map((r) => {
+      if (!r) return null;
       const splitedResource = r.trim().split('](');
       return {
         title: splitedResource[0].substring(1),
@@ -25,7 +27,6 @@ const parseLessonData = (params) => {
     });
   }
 
-  data.task.exercises = params.exercises;
   return data;
 }
 
