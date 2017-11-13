@@ -40,7 +40,7 @@ passport.use(new LocalStrategy(
         if (!user) { 
           return done(null, false, { message: 'username or password is incorrect' }); 
         }
-        savedUser = user
+        savedUser = user;
         return savedUser.checkPass(password);
       })
       .then((isMatch) => {

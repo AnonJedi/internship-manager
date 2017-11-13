@@ -20,7 +20,7 @@ app.use(bodyParser());
 app.use(session({ 
   resave: false,
   saveUninitialized: true,
-  cookie: { secure: true },
+  cookie: { secure: false },
   secret: process.env.SECRET_KEY || 'keyboard cat' 
 }));
 app.use(flash());
