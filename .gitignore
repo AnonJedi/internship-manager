@@ -1,7 +1,8 @@
-src/node_modules/
-src/npm-debug.log
+node_modules
 npm-debug.log
+
+src/server/build
 
 docker-compose.override.yml
 .env.node
-.env.mongodb
+.env.pg

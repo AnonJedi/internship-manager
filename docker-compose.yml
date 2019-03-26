@@ -1,21 +1,19 @@
 version: '2'
 services:
-  mongodb:
+  postgres:
     build:
       context: .
-      dockerfile: docker/mongodb/Dockerfile
-    ports:
-      - "27017:27017"
-      - "28017:28017"
+      dockerfile: docker/postgres/Dockerfile
+    env_file:
+      - ".env.pg"
   node:
     build:
       context: .
       dockerfile: docker/node/Dockerfile
     volumes:
-      - ./src/:/usr/src/app/
-      - /usr/src/node_modules
+      - ./src/server:/usr/src/app/
     links:
-      - "mongodb"
+      - "postgres"
     env_file:
       - ".env.node"
     command: /bin/bash -c "npm i && npm start"
