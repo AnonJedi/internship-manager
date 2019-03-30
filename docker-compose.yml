@@ -11,11 +11,11 @@ services:
       context: .
       dockerfile: docker/node/Dockerfile
     volumes:
-      - ./src/server:/usr/src/app/
+      - ./server:/usr/src/app/
     links:
       - "postgres"
     env_file:
       - ".env.node"
-    command: /bin/bash -c "npm i && npm start"
+    command: /bin/bash -c "npm i && npm run start:prod"
     ports:
       - "3000:3000"
