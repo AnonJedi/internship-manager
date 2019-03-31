@@ -1,5 +1,10 @@
-// import { GET_INTERNSHIP_LIST, GET_INTERNSHIP_LIST_SUCCESS } from '../constants';
-// import { getInternshipList } from '@/api/internships';
+import {
+  GET_INTERNSHIP_LIST,
+  GET_INTERNSHIP_LIST_REQUESTING,
+  GET_INTERNSHIP_LIST_SUCCESS,
+  GET_INTERNSHIP_LIST_FAIL,
+} from '../constants';
+import { getInternshipList } from '../../api/internships';
 
 export default {
   state: {
@@ -8,12 +13,30 @@ export default {
   },
 
   mutations: {
+    [GET_INTERNSHIP_LIST_REQUESTING](state) {
+      state.loading = true;
+    },
 
+    [GET_INTERNSHIP_LIST_SUCCESS](state, payload) {
+      state.internshipList = payload;
+      state.loading = false;
+    },
+
+    [GET_INTERNSHIP_LIST_FAIL](state) {
+      state.loading = false;
+    },
   },
 
   actions: {
-    // [GET_INTERNSHIP_LIST]({ commit, state }) {
-    //   state.internships.loading = true;
-    // },
+    async [GET_INTERNSHIP_LIST]({ commit }, params) {
+      commit(GET_INTERNSHIP_LIST_REQUESTING);
+
+      try {
+        const internshipList = await getInternshipList(params.page, params.perPage);
+        commit(GET_INTERNSHIP_LIST_SUCCESS, internshipList);
+      } catch (err) {
+        commit(GET_INTERNSHIP_LIST_FAIL, err.message);
+      }
+    },
   },
 };

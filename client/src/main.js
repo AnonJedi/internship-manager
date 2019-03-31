@@ -1,13 +1,18 @@
 import Vue from 'vue';
-import Vuex from 'vuex';
+// import {
+//   MdDrawer,
+//   MdToolbar,
+//   MdList,
+//   MdIcon,
+// } from 'vue-material/dist/components';
+import 'vue-material/dist/vue-material.min.css';
+
 import App from './App.vue';
 import router from './router';
 import store from './store';
 import './registerServiceWorker';
 
 Vue.config.productionTip = false;
-Vue.use(Vuex);
-
 new Vue({
   router,
   store,
