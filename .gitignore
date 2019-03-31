@@ -1,7 +1,9 @@
 node_modules
 npm-debug.log
+dist/
 
-src/server/build
+# client
+client/app.config.json
 
 docker-compose.override.yml
 .env.node
