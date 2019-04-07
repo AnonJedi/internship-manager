@@ -1,19 +1,19 @@
 import axios from 'axios';
 import { BASE_URL } from '.';
 
-export async function getInternshipList(page, perPage) {
-  console.log(BASE_URL);
+const LIST_URL = 'https://api.myjson.com/bins/1be678';
 
-  const { data } = await axios.get(`${BASE_URL}/internships`, {
+export async function getInternshipList(page, perPage) {
+  const { data } = await axios.get(LIST_URL, {
     params: {
       page,
       per_page: perPage,
     },
   });
-  return data;
+  return [data, data, data];
 }
 
-export async function getInternship(id) {
-  const { data } = await axios.get(`${BASE_URL}/internships/${id}`);
+export async function getInternship() {
+  const { data } = await axios.get(LIST_URL);
   return data;
 }

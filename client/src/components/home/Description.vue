@@ -1,8 +1,8 @@
 <template>
   <div class="content">
-    <h1 class="md-display-2 header">Internship</h1>
+    <h1 class="header">Internship</h1>
 
-    <p class="md-body-2">What're we doing here?</p>
+    <h4>What're we doing here?</h4>
     <p class="md-body-1">
       This site is a platform for connection between young specialists and tutors.
       &nbsp;All the internships are available for applying on this platform.

@@ -12,6 +12,12 @@ export default {
     loading: false,
   },
 
+  getters: {
+    internshipList(state) {
+      return state.internshipList;
+    },
+  },
+
   mutations: {
     [GET_INTERNSHIP_LIST_REQUESTING](state) {
       state.loading = true;

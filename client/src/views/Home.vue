@@ -7,8 +7,9 @@
 
 <script>
 
-import Description from '@/components/home/Description';
-import InternshipList from '@/components/home/InternshipList';
+import Description from '@/components/home/Description.vue';
+import InternshipList from '@/components/home/InternshipList.vue';
+
 export default {
   name: 'home',
   components: { Description, InternshipList },
