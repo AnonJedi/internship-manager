@@ -7,19 +7,18 @@
 </template>
 
 <script>
-// import NavBar from '@/components/NavBar';
-
 export default {
   name: 'App',
-  // components: { NavBar },
 };
 </script>
 
 <style lang="scss" scoped>
 .app {
   min-height: 100vh;
+  height: 100%;
   background: linear-gradient(to bottom, #4d236d 0%, #171717 100%);
   color: white;
+  font-family: Roboto;
 }
 
 .content {
